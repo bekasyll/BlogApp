@@ -7,11 +7,15 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from blog.models import Posts
 
 
-class LoginUserForm(forms.Form):
+class LoginUserForm(AuthenticationForm):
     username = forms.CharField(label="Username or E-mail:", required=True, max_length=30,
             widget=forms.TextInput(attrs={"class":"form-control", "aria-describedby":"emailHelp", "placeholder":"Enter your username or email"}))
     password = forms.CharField(label="Password:", required=True, max_length=30,
             widget=forms.PasswordInput(attrs={"class":"form-control", "placeholder":"Enter your password"}))
+
+    class Meta:
+        model = get_user_model()
+        fields = ["username", "password"]
 
 
 class RegisterUserForm(UserCreationForm):

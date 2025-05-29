@@ -25,7 +25,7 @@
 
 <body>
     <div class="container custom-container">
-        {% block header %}
+        {% if user.is_authenticated %}
           <nav class="navbar navbar-expand-lg navbar-light bg-light w-100" >
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,7 +37,6 @@
                     <li><a href="{% url 'home' %}"><img style="width: 300px" src="{% static 'blog/images/pho.png' %}" alt=""></a></li>
 
                 </ul>
-                <form class="form-inline my-2 my-lg-0">
                     <div class="dropdown">
                         <button style="background-color: #16266a; color: white;"  class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           Menu
@@ -47,14 +46,21 @@
                             <a class="dropdown-item" href="{% url 'profile' %}">Profile</a>
                             <a class="dropdown-item" href="{% url 'newPost' %}">New Post</a>
                             <a class="dropdown-item" href="{% url 'myPosts' %}">My Posts</a>
-                            <a class="dropdown-item" href="{% url 'logout' %}">Log Out</a>
+    {#                            <a class="dropdown-item" href="{% url 'logout' %}">Log Out</a>#}
+                            <form method="POST" action="{% url 'logout' %}" style="margin: 0">
+                                {% csrf_token %}
+                                <button type="submit" class="dropdown-item" style="background: none; border: none;">
+                                    Log Out
+                                </button>
+                            </form>
                         </div>
                       </div>
-                </form>
+{#                <form class="form-inline my-2 my-lg-0">#}
+{#                </form>#}
             </div>
         </nav>
         <br>
-        {% endblock %}
+        {% endif %}
         {% block content %}
         {% endblock %}
     </div>

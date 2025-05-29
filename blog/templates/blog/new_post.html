@@ -5,7 +5,7 @@
     {% csrf_token %}
     <div class="container">
         <br>
-        <h1 class="fw-bolder">Make a new post</h1>
+        <h1 class="fw-bolder">{{ heading }}</h1>
         <hr><br>
         <div>{{ form.non_field_errors }}</div>
         {% for f in form %}

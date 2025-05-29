@@ -4,13 +4,13 @@ A simple yet functional blog platform built with **Django**. This application al
 
 ## 🚀 Features
 
-* User registration and authentication (username or email login)
-* Create, view, and manage personal blog posts
-* Update user profile (name and email)
-* Secure login/logout system
+* User registration and authentication (username or email login).
+* Create, view, and manage personal blog posts.
+* Update user profile.
+* Secure login/logout system.
 * Custom email-based authentication backend in addition to the default username login.
-* Bootstrap 4 UI with responsive layout
-* Time-ago post formatting filter
+* Bootstrap 4 UI with responsive layout.
+* Time-ago post formatting filter.
 
 ## 🖼 Previews
 

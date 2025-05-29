@@ -1,81 +1,54 @@
-from django.contrib.auth import authenticate, login, logout, get_user_model
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
-from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from django.views.generic import UpdateView
+from django.views.generic import UpdateView, ListView, CreateView
 
 from blog.forms import LoginUserForm, RegisterUserForm, NewPostForm, ProfileUserForm
 from blog.models import Posts
 
 
-@login_required
-def home(request: HttpRequest):
-    context = {
-        "posts": Posts.objects.all(),
-        "title": "Home"
-    }
-    return render(request, 'blog/home.html', context)
+class BlogHome(LoginRequiredMixin, ListView):
+    template_name = 'blog/home.html'
+    context_object_name = 'posts'
+    extra_context = {"title": "Home"}
+
+    def get_queryset(self):
+        return Posts.objects.all()
 
 
-def login_user(request: HttpRequest):
-    if request.method == "POST":
-        form = LoginUserForm(request.POST)
-        if form.is_valid():
-            cd = form.cleaned_data
-            user = authenticate(request, username=cd['username'], password=cd['password'])
+class LoginUser(LoginView):
+    form_class = LoginUserForm
+    template_name = "blog/login_user.html"
+    extra_context = {"title": "Log in"}
 
-            if user and user.is_active:
-                login(request, user)
-                return redirect("home")
-            else:
-                return redirect("login")
-    else:
-        form = LoginUserForm()
 
-    return render(request, "blog/login_user.html", {"title":"Log in", "form":form,})
+class RegisterUser(CreateView):
+    form_class = RegisterUserForm
+    template_name = 'blog/signup_user.html'
+    extra_context = {"title": "Sign up"}
+    success_url = reverse_lazy("login")
 
-@login_required
-def logout_user(request: HttpRequest):
-    logout(request)
-    return redirect("login")
 
-def signup_user(request: HttpRequest):
-    if request.method == "POST":
-        form = RegisterUserForm(request.POST)
-        if form.is_valid():
-            user = form.save(commit=False)
-            user.set_password(form.cleaned_data["password2"])
-            user.save()
-            print(user)
-            return redirect("login")
-    else:
-        form = RegisterUserForm()
+class MyPosts(LoginRequiredMixin, ListView):
+    template_name = 'blog/home.html'
+    context_object_name = 'posts'
+    extra_context = {"title": "My Posts"}
 
-    return render(request, "blog/signup_user.html", {"title": "Sign up", "form": form})
+    def get_queryset(self):
+        return Posts.objects.filter(author=self.request.user)
 
-@login_required
-def my_posts(request: HttpRequest):
-    posts = Posts.objects.filter(author=request.user)
-    return render(request, "blog/my_posts.html", {"posts": posts})
 
-@login_required
-def new_post(request: HttpRequest):
-    if request.method == "POST":
-        form = NewPostForm(request.POST)
-        if form.is_valid():
-            try:
-                post = form.save(commit=False)
-                post.author = request.user
-                post.save()
-                return redirect('home')
-            except:
-                form.add_error(None, "Error creating post!")
-    else:
-        form = NewPostForm()
-    return render(request, "blog/new_post.html", {"title": "New Post", "form": form})
+class NewPost(LoginRequiredMixin, CreateView):
+    form_class = NewPostForm
+    template_name = 'blog/new_post.html'
+    success_url = reverse_lazy("home")
+    extra_context = {"title": "New post", "heading": "Make a new post"}
+
+    def form_valid(self, form):
+        post = form.save(commit=False)
+        post.author = self.request.user
+        return super().form_valid(form)
 
 
 class ProfileUser(LoginRequiredMixin, UpdateView):
