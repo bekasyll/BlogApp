@@ -1,0 +1,44 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+
+{% block header %}
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <br><br><br><br>
+            <div class="card my-5">
+
+                <form class="card-body cardbody-color p-lg-5" method="post">
+                    {% csrf_token %}
+                    <div class="text-center">
+                        <h2 style="color: #16266a">Create An Account</h2>
+                    </div>
+                    <br>
+
+                    <div>{{ form.non_fields.errors }}</div>
+                    {% for f in form %}
+                        <div class="mb-3">
+                            <label for="{{ f.id_for_label }}">{{ f.label }}</label>
+                            {{ f }}
+                        </div>
+                        <div>{{ f.errors }}</div>
+                    {% endfor %}
+                    <br>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-color px-5 mb-5 w-100" style="background-color: #16266a; color: white">Sign Up</button>
+                    </div>
+                    <div id="emailHelp" class="form-text text-center mb-5 text-dark">Have already an account ? <a
+                            href="{% url 'login' %}" style="color: #16266a;" >Login here</a>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

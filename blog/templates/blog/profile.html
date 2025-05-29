@@ -1,0 +1,23 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+{% load static %}
+<form method="POST">
+    {% csrf_token %}
+    <div class="container">
+        <br>
+        <h1 class="fw-bolder">{{ title }}</h1>
+        <hr><br>
+        <div>{{ form.non_field_errors }}</div>
+        {% for f in form %}
+            <div class="mb-3">
+                <h3><label for="{{ f.id_for_label }}">{{ f.label }}</label></h3>
+                {{ f }}
+            </div>
+        {% endfor %}
+
+        <button type="submit" class="btn btn-primary" style="background-color: #16266a;">Save</button>
+    </div>
+</form>
+
+{% endblock %}
+

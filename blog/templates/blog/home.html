@@ -1,0 +1,30 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+{% load custom_tags %}
+{% block content %}
+    <div class="container custom-container" style="max-width: 1350px">
+      <h1 class="fw-bolder">Home</h1>
+      <hr />
+      <br />
+      {% for post in posts %}
+      <article class="media content-section">
+        <div
+          class="media-body"
+          style="border: 1px solid black; padding: 23px; margin-bottom: 10px"
+        >
+          <div class="article-metadata">
+            <h4 style="text-align: left; float: left; color: #000000">
+              {{ post.author }}
+            </h4>
+            <h5 style="text-align: right; float: right">
+              {{ post.date_posted|time_since_custom }}
+            </h5>
+            <hr style="clear: both" />
+          </div>
+          <h2>{{ post.title }}</h2>
+          <p class="article-content">{{ post.content }}</p>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+{% endblock %}
