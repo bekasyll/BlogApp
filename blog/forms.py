@@ -1,8 +1,8 @@
 import datetime
-
 from django import forms
 from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordChangeForm
+from django.contrib.auth.views import PasswordChangeView
 
 from blog.models import Posts
 
@@ -45,6 +45,7 @@ class RegisterUserForm(UserCreationForm):
             raise forms.ValidationError("Email already exists!")
         return user_email
 
+
 class NewPostForm(forms.ModelForm):
     title = forms.CharField(label="Title:", required=True, max_length=30, widget=forms.TextInput(attrs={"class": "form-control", "aria-describedby": "emailHelp"}))
     content = forms.CharField(label="Content:", required=True, widget=forms.Textarea(attrs={"class": "form-control", "rows": 7}))
@@ -52,6 +53,7 @@ class NewPostForm(forms.ModelForm):
     class Meta:
         model = Posts
         fields = ['title', 'content']
+
 
 class ProfileUserForm(forms.ModelForm):
     this_year = datetime.date.today().year
@@ -64,3 +66,8 @@ class ProfileUserForm(forms.ModelForm):
     class Meta:
         model = get_user_model()
         fields = ["username", "email", "first_name", "last_name"]
+
+class UserPasswordChangeForm(PasswordChangeForm):
+    old_password = forms.CharField(label="Old password:", max_length=30, required=True, widget=forms.PasswordInput(attrs={"class": "form-control", "placeholder": "Enter old password"}))
+    new_password1 = forms.CharField(label="New password:", max_length=30, required=True, widget=forms.PasswordInput(attrs={"class": "form-control", "placeholder": "Enter new password"}))
+    new_password2 = forms.CharField(label="New password again:", max_length=30, required=True, widget=forms.PasswordInput(attrs={"class": "form-control", "placeholder": "Enter new password again"}))

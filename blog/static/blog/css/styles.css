@@ -7,3 +7,87 @@ html, body {
   background-color: #f8f9fa !important;
   color: #212529;
 }
+
+.article-content {
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+  white-space: pre-wrap !important;
+}
+
+.list-pages {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.list-pages ul {
+    margin: 20px 0 0 0;
+    padding: 0;
+    list-style: none;
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+.list-pages ul li {
+    display: inline-block;
+}
+
+.list-pages a {
+    color: #16266a;
+    font-size: 18px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.list-pages .page-num,
+.list-pages .page-num-selected {
+    display: inline-block;
+    min-width: 44px;
+    height: 44px;
+    line-height: 44px;
+    padding: 0 15px;
+    border: 1px solid #d0d0d0;
+    border-radius: 50%;
+    text-align: center;
+    cursor: pointer;
+}
+
+.list-pages .page-num:hover {
+    background-color: #f2f2f2;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.list-pages .page-num-selected {
+    background-color: #16266a;
+    color: white;
+    font-weight: bold;
+    border: none;
+}
+
+.list-pages .page-num-selected:hover {
+    background-color: #16266a;
+    box-shadow: none;
+}
+
+li.last form {
+    display: inline-block;
+}
+
+li.last form button {
+    all: unset;
+    cursor: pointer;
+    color: #16266a;
+    font-size: 18px;
+    border: 1px solid #d0d0d0;
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    text-align: center;
+    line-height: 44px;
+    transition: all 0.3s ease;
+}
+
+li.last form button:hover {
+    background-color: #f2f2f2;
+}

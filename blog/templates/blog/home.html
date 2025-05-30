@@ -2,29 +2,74 @@
 {% load static %}
 {% load custom_tags %}
 {% block content %}
-    <div class="container custom-container" style="max-width: 1350px">
-      <h1 class="fw-bolder">{{ title }}</h1>
-      <hr />
-      <br />
-      {% for post in posts %}
-      <article class="media content-section">
-        <div
-          class="media-body"
-          style="border: 1px solid black; padding: 23px; margin-bottom: 10px"
-        >
-          <div class="article-metadata">
-            <h4 style="text-align: left; float: left; color: #000000">
-              {{ post.author }}
-            </h4>
-            <h5 style="text-align: right; float: right">
-              {{ post.date_posted|time_since_custom }}
-            </h5>
-            <hr style="clear: both" />
-          </div>
-          <h2>{{ post.title }}</h2>
-          <p class="article-content">{{ post.content }}</p>
-        </div>
-      </article>
-      {% endfor %}
+    <article class="container custom-container" style="max-width: 1350px">
+        <h1 class="fw-bolder">{{ title }}</h1>
+        <hr />
+        <br />
+        {% if not posts %}
+            <h4>No posts added</h4>
+        {% endif %}
+        {% for post in posts %}
+            <article class="media content-section">
+            <div
+              class="media-body"
+              style="border: 1px solid black; padding: 23px; margin-bottom: 10px"
+            >
+              <div class="article-metadata">
+                <h4 style="text-align: left; float: left; color: #000000">
+                  {{ post.author }}
+                </h4>
+                <h5 style="text-align: right; float: right">
+                  Posted: {{ post.date_posted|time_since_custom }}
+                  {% if post.date_posted|date:"H:m:s" != post.date_updated|date:"H:m:s" %}
+                      | Updated: {{ post.date_updated|time_since_custom }}
+                  {% endif %}
+                </h5>
+                <hr style="clear: both" />
+              </div>
+              <h2>{{ post.title }}</h2>
+              <p class="article-content" style="overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; white-space: pre-wrap;">{{ post.content }}</p>
+
+              {% if ud %}
+                  <a style="background-color: #16266a; color: white; width: 120px;" class="btn" href="{% url 'update_post' pk=post.pk %}">
+                      Update Post
+                  </a>
+                  <a style="background-color: #16266a; color: white; width: 120px;"  class="btn" href="{% url 'delete_post' pk=post.pk %}">
+                      Delete Post
+                  </a>
+              {% endif %}
+
+            </div>
+            </article>
+        {% endfor %}
+
+        {% if page_obj.has_other_pages %}
+            <nav class="list-pages">
+                <ul>
+                    {% if page_obj.has_previous %}
+                        <li class="page-num">
+                            <a href="?page={{ page_obj.previous_page_number }}">&lt</a>
+                        </li>
+                    {% endif %}
+                    {% for p in paginator.page_range %}
+                        {% if page_obj.number == p %}
+                            <li class="page-num page-num-selected">
+                                {{ p }}
+                            </li>
+                        {% elif p >= page_obj.number|add:-2 and p <= page_obj.number|add:2%}
+                            <li class="page-num">
+                                <a href="?page={{ p }}">{{ p }}</a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                    {% if page_obj.has_next %}
+                        <li class="page-num">
+                            <a href="?page={{ page_obj.next_page_number }}">&gt</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        {% endif %}
+        <br><br>
     </div>
 {% endblock %}

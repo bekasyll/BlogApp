@@ -14,8 +14,11 @@
                 {{ f }}
             </div>
         {% endfor %}
-
-        <button type="submit" class="btn btn-primary" style="background-color: #16266a;">Save</button>
+        <hr>
+        <div style="align-content: center">
+            <button type="submit" class="btn btn-primary" style="background-color: #16266a; color: white; width: 120px;">Save</button>
+            <a class="btn btn-primary" style="text-decoration: none; background-color: #16266a; color: white; width: 170px;" href="{% url "password_change" %}">Change password</a></p>
+        </div>
     </div>
 </form>
 

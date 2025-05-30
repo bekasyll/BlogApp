@@ -1,30 +1,49 @@
 # 📝 Django Blog Application
 
-A simple yet functional blog platform built with **Django**. This application allows users to register, log in using their email or username, log out, create and manage blog posts, and update profile information.
+WriteWave - a clean and functional blog platform built with **Django 5**. This application enables users to create, read, update, and delete blog posts, handle user profiles, and authenticate using either a username or email.
+
+---
 
 ## 🚀 Features
 
-* User registration and authentication (username or email login).
-* Create, view, and manage personal blog posts.
-* Update user profile.
-* Secure login/logout system.
-* Custom email-based authentication backend in addition to the default username login.
-* Bootstrap 4 UI with responsive layout.
-* Time-ago post formatting filter.
+* User registration and login via **username or email**.
+* Create, read, update, and delete blog posts.
+* View and edit user profile.
+* Password change functionality.
+* Custom `time_since` filter for "time ago" post display.
+* Pagination for posts.
+* Clean Bootstrap 4 UI.
+* PostgreSQL database support (with `.env` config).
 
-## 🖼 Previews
+---
 
-Coming soon...
+## 🛠 Tech Stack
 
-## ⚙️ Tech Stack
+* **Backend**: Python 3, Django 5.
+* **Frontend**: Bootstrap 4, HTML5, CSS3.
+* **Database**: PostgreSQL (default), with optional SQLite support.
+* **Other**:
 
-- Python 3
-- Django 5
-- SQLite (default dev DB)
-- Bootstrap 4
-- HTML5/CSS3 (custom templates)
+  * Django Class-Based Views (CBVs).
+  * Custom authentication backend allows users to log in with either a username or email
+  * Custom template tags (`time_since_custom`).
+
+---
+
+## 🖼 Screenshots
+
+<div align="center">
+<img src="screenshots/SignUp.png" alt="Sign Up" width="600" />
+<img src="screenshots/Login.png" alt="Login" width="600" />
+<img src="screenshots/Home.png" alt="Home Page" width="600" />
+<img src="screenshots/MyProfile.png" alt="User Profile" width="600" />
+<img src="screenshots/CreatePost.png" alt="Create Post" width="600" />
+<img src="screenshots/MyPosts.png" alt="User Posts" width="600" />
+</div>
+
+---
 
 ## 🧑‍💻 Author
 
-* Bekassyl (https://github.com/bekasyll)
+* Bekassyl ([GitHub Profile](https://github.com/bekasyll))
 
